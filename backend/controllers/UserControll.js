@@ -63,7 +63,7 @@ export function loginuser(req, res) {
                 role: user.role,
                 isVarified: user.isVarified,
             },
-            "secretkey",
+            process.env.JWT_SECRET,
         ) ; 
         return res.status(200).json({
           message: "Login successful",

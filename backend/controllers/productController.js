@@ -30,62 +30,70 @@ export  async function getproducts(req, res) {
         return res.status(500).json({ message: "Internal server error" });
     }   }  
 
- export async function Deleteproduct(req, res) {
-        if (!isAdmin(req)) {
-         return res.status(403).json({
-              message: "Access denied. Admins only." });
-         }
-            try {
 
-                const productId = req.params.id;
-                
-                if (productId == null  ) {
-                    return res.status(404).json(
-                        { message: "Product id is required" });
-                }
-                await Product.deleteOne(
-                    { productId: productId })
-                res.json({ message: "Product deleted successfully" });
 
-                
-            } catch (error) {
-                console.error("Error deleting product:", error.message);
-                return res.status(500).json({ message: "Internal server error" });
-            }   
-        }
+export async function Deleteproduct(req, res) {
+  if (!isAdmin(req)) {
+    return res.status(403).json({
+      message: "Access denied. Admins only."
+    });
+  }
 
-export async function updateproduct(req, res) {
-      if (!isAdmin(req)) {
-             return res.status(403).json({
-                  message: "Access denied. Admins only." });
-             }  
-                try {
-                    const productId = req.params.id;
-                    const updateData = req.body;
+  try {
+    const productId = req.params.id;
 
-                    await Product.updateOne(
-                        { productId: productId },
-                         updateData 
-                    );
-                    res.json({ message: "Product updated successfully" });
-                } catch (error) {
+    await Product.findByIdAndDelete(productId); // ✅ FIXED
 
-                    console.error("Error updating product:", error.message);
-                    return res.status(500).json({ message: "Internal server error" });
-                }
-            }
- export async function getproductbyid(req, res) {
-    try {
-        const productId = req.params.id;
-        const product = await Product.findOne({ productId: productId });
-        if (product == null) {
-            return res.status(404).json({ message: "Product not found" });
-        }       res.json(product);  
-    } catch (error) {
-        console.error("Error fetching product:", error.message);
-        return res.status(500).json({ message: "Internal server error" });
-    }   
+    res.json({ message: "Product deleted successfully" });
 
+  } catch (error) {
+    console.error("Error deleting product:", error.message);
+    return res.status(500).json({ message: "Internal server error" });
+  }
 }
+export async function updateproduct(req, res) {
+  if (!isAdmin(req)) {
+    return res.status(403).json({
+      message: "Access denied. Admins only."
+    });
+  }
 
+  try {
+    const productId = req.params.id;
+    const updateData = req.body;
+
+    const updatedProduct = await Product.findByIdAndUpdate(
+      productId,
+      updateData,
+      { new: true }
+    );
+
+    if (!updatedProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.json(updatedProduct);
+
+  } catch (error) {
+    console.error("Error updating product:", error.message);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+}
+ export async function getproductbyid(req, res) {
+  try {
+    const productId = req.params.id;
+
+    const product = await Product.findById(productId); // ✅ FIXED
+
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.json(product);
+
+  } catch (error) {
+    console.error("Error fetching product:", error.message);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+}
 
