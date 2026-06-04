@@ -11,6 +11,7 @@ import ProductPage from './pages/products';
 import Collections from './pages/collections';
 import About from './pages/about';
 import Contact from './pages/contact';
+import Overview from './pages/overview';
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
         <Route path="/collections" element={<Collections />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/overview/:id" element={<Overview />} />
 
          
   </Routes>

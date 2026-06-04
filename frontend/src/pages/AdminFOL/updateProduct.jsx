@@ -60,10 +60,9 @@ export default function AdminUpdateProduct() {
 
     setLoading(true);
 
-    const promises = [];
-    for (let i = 0; i < product.altImages.length; i++) {
-      promises[i] = mediaUpload(product.altImages[i]);
-    }
+     const promises = product.altImages.map((img) =>
+      mediaUpload(img)
+      );
 
     try {
       const urls = await Promise.all(promises);
@@ -79,8 +78,11 @@ export default function AdminUpdateProduct() {
         labelprice: product.labelprice,
         category: product.category,
         description: product.description,
-        imageUrl: product.imageUrl,
-        altImages: urls,
+            imageUrl: [
+        product.imageUrl,
+        ...urls
+      ],
+       
         stock: product.stock,
         alternativeNames: alternativeNames
       };
@@ -161,8 +163,12 @@ export default function AdminUpdateProduct() {
             <select name="category" value={product.category} onChange={handleChange} className="input">
               <option value="">Select Category</option>
               <option>Furniture</option>
-              <option>Decor</option>
+              <option>Living</option>
+              <option>Dining</option>
               <option>Lighting</option>
+              <option>Office</option>
+              <option>Bed Room</option>
+              <option>Luxury</option>
             </select>
           </div>
 

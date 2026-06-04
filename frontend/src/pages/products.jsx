@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { FiSearch, FiHeart, FiShoppingCart } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 export default function ProductPage() {
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
   useEffect(() => {
 
@@ -21,6 +24,21 @@ export default function ProductPage() {
       });
 
   }, []);
+
+            const filteredProducts = products.filter((product) => {
+
+          const matchesSearch =
+            product.name.toLowerCase().includes(search.toLowerCase());
+
+          const matchesCategory =
+            selectedCategory === "All" ||
+            product.category === selectedCategory;
+
+          return matchesSearch && matchesCategory;
+        });
+
+
+
 
   return (
 
@@ -74,11 +92,13 @@ export default function ProductPage() {
 
           <FiSearch className="text-slate-500" />
 
-          <input
+        <input
             type="text"
             placeholder="Search furniture..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
             className="w-[250px] outline-none"
-          />
+            />
 
         </div>
 
@@ -87,38 +107,98 @@ export default function ProductPage() {
       {/* FILTERS */}
       <section className="mx-auto mt-10 flex max-w-7xl flex-wrap gap-3 px-5">
 
-        {[
-          "All",
-          "Living Room",
-          "Bedroom",
-          "Office",
-          "Dining",
-          "Luxury",
-        ].map((item) => (
-          <button
-            key={item}
-            className="rounded-full border border-slate-300 bg-white px-5 py-2 text-sm font-medium text-slate-700 transition hover:bg-[#B45309] hover:text-white"
-          >
-            {item}
-          </button>
-        ))}
+                   <div className="flex flex-wrap gap-4">
 
-      </section>
+        <button
+          onClick={() => setSelectedCategory("All")}
+          className={`px-6 py-3 rounded-full border transition-all duration-300 font-medium
+          ${
+            selectedCategory === "All"
+              ? "bg-[#B45309] text-white border-[#B45309]"
+              : "bg-white text-slate-700 border-slate-300 hover:bg-[#B45309] hover:text-white hover:border-[#B45309]"
+          }`}
+        >
+          All
+        </button>
 
-      {/* PRODUCTS */}
-      <section className="mx-auto mt-12 grid max-w-7xl grid-cols-1 gap-8 px-5 pb-20 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <button
+          onClick={() => setSelectedCategory("Living")}
+          className={`px-6 py-3 rounded-full border transition-all duration-300 font-medium
+          ${
+            selectedCategory === "Living"
+              ? "bg-[#B45309] text-white border-[#B45309]"
+              : "bg-white text-slate-700 border-slate-300 hover:bg-[#B45309] hover:text-white hover:border-[#B45309]"
+          }`}
+        >
+          Living Room
+        </button>
 
-        {loading ? (
+        <button
+          onClick={() => setSelectedCategory("Bed Room")}
+          className={`px-6 py-3 rounded-full border transition-all duration-300 font-medium
+          ${
+            selectedCategory === "Bed Room"
+              ? "bg-[#B45309] text-white border-[#B45309]"
+              : "bg-white text-slate-700 border-slate-300 hover:bg-[#B45309] hover:text-white hover:border-[#B45309]"
+          }`}
+        >
+          Bed Room
+        </button>
 
-          <div className="col-span-full flex justify-center py-20">
-            <h1 className="text-2xl font-semibold text-slate-600">
-              Loading Products...
-            </h1>
-          </div>
+        <button
+          onClick={() => setSelectedCategory("Office")}
+          className={`px-6 py-3 rounded-full border transition-all duration-300 font-medium
+          ${
+            selectedCategory === "Office"
+              ? "bg-[#B45309] text-white border-[#B45309]"
+              : "bg-white text-slate-700 border-slate-300 hover:bg-[#B45309] hover:text-white hover:border-[#B45309]"
+          }`}
+        >
+          Office
+        </button>
 
-        ) : (
+                <button
+                  onClick={() => setSelectedCategory("Dining")}
+                  className={`px-6 py-3 rounded-full border transition-all duration-300 font-medium
+                  ${
+                    selectedCategory === "Dining"
+                      ? "bg-[#B45309] text-white border-[#B45309]"
+                      : "bg-white text-slate-700 border-slate-300 hover:bg-[#B45309] hover:text-white hover:border-[#B45309]"
+                  }`}
+                >
+                  Dining
+                </button>
 
-          products.map((product) => (
+                <button
+                  onClick={() => setSelectedCategory("Luxury")}
+                  className={`px-6 py-3 rounded-full border transition-all duration-300 font-medium
+                  ${
+                    selectedCategory === "Luxury"
+                      ? "bg-[#B45309] text-white border-[#B45309]"
+                      : "bg-white text-slate-700 border-slate-300 hover:bg-[#B45309] hover:text-white hover:border-[#B45309]"
+                  }`}
+                >
+                  Luxury
+                </button>
+
+              </div>
+
+                    </section>
+
+                    {/* PRODUCTS */}
+                    <section className="mx-auto mt-12 grid max-w-7xl grid-cols-1 gap-8 px-5 pb-20 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+
+                      {loading ? (
+
+                  <div className="col-span-full flex justify-center py-20">
+                    <h1 className="text-2xl font-semibold text-slate-600">
+                      Loading Products...
+                    </h1>
+                  </div>
+
+                ) : (
+
+          filteredProducts.map((product) => (
 
             <div
               key={product._id}
@@ -129,7 +209,7 @@ export default function ProductPage() {
               <div className="relative overflow-hidden">
 
                 <img
-                  src={product.image}
+                  src={product.imageUrl[0]}
                   alt={product.name}
                   className="h-[320px] w-full object-cover transition duration-500 group-hover:scale-110"
                 />
@@ -178,9 +258,9 @@ export default function ProductPage() {
                     </p>
                   </div>
 
-                  <button className="rounded-full bg-[#B45309] px-5 py-2 text-sm font-semibold text-white transition hover:bg-[#92400E]">
+                  <Link state={product} to={`/overview/${product._id}`} className="rounded-full bg-[#B45309] px-5 py-2 text-sm font-semibold text-white transition hover:bg-[#92400E]">
                     Add Cart
-                  </button>
+                  </Link>
 
                 </div>
 

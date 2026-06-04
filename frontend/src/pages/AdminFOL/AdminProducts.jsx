@@ -167,10 +167,12 @@ export default function AdminProducts() {
 
                   {/* PRODUCT */}
                   <div className="flex items-center gap-4">
-                    <div className="h-12 w-12 rounded-xl bg-slate-100 flex items-center justify-center text-sm font-bold text-slate-600">
-                      {p.name.charAt(0)}
-                    </div>
-                    <div>
+                  <img
+                    src={p.imageUrl[0]}
+                    alt={p.name}
+                    className="h-12 w-12 rounded-xl object-cover border border-slate-200"
+                  />
+                                      <div>
                       <p className="font-semibold text-slate-900">{p.name}</p>
                       <p className="text-xs text-slate-500">{p._id}</p>
                     </div>
