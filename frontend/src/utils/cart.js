@@ -1,49 +1,45 @@
-export function Loadcart(){
-    let catr = localStorage.getItem("cart");
-    if (catr== null){
-        localStorage.SetItem("cart", []);
-        catr=="[]"
+export function Loadcart() {
+    let cartString = localStorage.getItem("cart");
 
+    if (cartString == null || cartString === "") {
+        localStorage.setItem("cart", "[]");
+        cartString = "[]";
     }
 
-    const catr = JSON.parse(catr);
-    return catr;
+    return JSON.parse(cartString);
 }
-export function Addtocart(product){
+
+export function Addtocart(product, quantity = 1) {
+
     let cart = Loadcart();
 
-    const existingProductIndex = cart.findIndex
-    (item =>{
-        return item.id === product.id;
-    }
-);
-    if (existingProductIndex !== -1){
+    const existingProductIndex = cart.findIndex(
+        (item) => item.id === product.id
+    );
 
-        if (quantity<1){
-            console.log("Quantity must be at least 1");
-            return;
+    if (existingProductIndex !== -1) {
+
+        cart[existingProductIndex].quantity += quantity;
+
+        if (cart[existingProductIndex].quantity <= 0) {
+            cart.splice(existingProductIndex, 1);
         }
 
-        const CartItem = {
-            id: product.id,
-            name: product.name,
-            price: product.price,  
-            quantity: cart[existingProductIndex].quantity + 1,
-            img: product.img
-        }
-        cart.push(CartItem);
     } else {
-        const existingProductIndex = cart[existingProductIndex]
 
-        const newQuantity = existingProductIndex.quantity +quantity;
+        if (quantity > 0) {
 
-        if (newQuantity < 1){
-            cart=cart.folter(
-                (item) => item.id !== product.id
-            );
-        } else { 
-            existingProductIndex.quantity = newQuantity;
+            const cartItem = {
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                quantity: quantity,
+                img: product.img
+            };
+
+            cart.push(cartItem);
         }
     }
+
     localStorage.setItem("cart", JSON.stringify(cart));
 }

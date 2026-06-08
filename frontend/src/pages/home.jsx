@@ -55,6 +55,13 @@ function Navbar() {
   >
     Contact
   </Link>
+
+  <Link
+    to="/cart"
+    className="relative text-sm font-medium text-slate-600 transition hover:text-[#B45309]"
+  >
+    Cart
+  </Link>
           </div>
 
           <div className="hidden items-center gap-3 sm:flex">

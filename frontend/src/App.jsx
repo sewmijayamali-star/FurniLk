@@ -2,7 +2,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Admin from './pages/admin'
 import Login from './pages/login'
 import Home from './pages/home';
-import { Toaster } from 'react-hot-toast';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import AdminProducts from "./pages/AdminFOL/AdminProducts";
 import Images from "./pages/images"
 import AdminAddProduct from "./pages/AdminFOL/adminAddProduct";
@@ -12,12 +13,19 @@ import Collections from './pages/collections';
 import About from './pages/about';
 import Contact from './pages/contact';
 import Overview from './pages/overview';
+import Cart from './pages/cart';
+import CheckOut from './pages/checkout';
+
+import { useLocation } from "react-router-dom";
 
 function App() {
   return (
     <BrowserRouter>
 
-    <Toaster  position="top-right"/>
+    <ToastContainer
+    position="top-right"
+    autoClose={2000}
+/>
 
       <Routes>
 
@@ -55,6 +63,9 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/overview/:id" element={<Overview />} />
+        <Route path="/cart" element={<Cart />} />
+         <Route path="/checkout" element={<CheckOut />} />
+        
 
          
   </Routes>

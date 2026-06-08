@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import Loader from "../components/Loader";
 import ImageSlider from "../components/ImageSlider";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { Addtocart } from "../utils/cart";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 import {
   FiShoppingCart,
@@ -140,19 +142,22 @@ export default function Overview() {
               {/* BUTTONS */}
              <div className="flex gap-4 mt-8">
 
-              <button
-                
+                          <button
+                onClick={() => {
+                    Addtocart(product, 1);
+                    toast.success("Product added to cart!");
+                }}
                 className="flex-1 bg-[#824203] hover:bg-[#6d3602] text-white py-4 rounded-2xl font-semibold transition"
-              >
+            >
                 Add To Cart
-              </button>
-
-              <button
-                
-                className="flex-1 bg-[#824203] hover:bg-[#6d3602] text-white py-4 rounded-2xl font-semibold transition"
+            </button>
+              <Link
+                 to="/checkout"
+                 state={[{ id: product.id, name: product.name, price: product.price, quantity: 1, img: product.imageUrl[0] }]}
+                  className="flex-1 bg-[#824203] hover:bg-[#6d3602] text-white py-4 rounded-2xl font-semibold transition flex items-center justify-center"
               >
-                Buy Now
-              </button>
+                         Buy Now
+              </Link>
 
             </div>
 
