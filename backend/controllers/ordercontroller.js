@@ -116,6 +116,15 @@ const product = await Product.findById(item.productId);
 
     const savedOrder = await newOrder.save();
 
+    /*for (let i = 0; i < itemsToOrder.length; i++) {
+      const item = itemsToOrder[i];
+      await product.updateOne(
+        { _id: item.productId },
+        { $inc: { stock: -item.quantity } }
+      );
+    }*/
+
+
     res.status(201).json({
       message: "Order created successfully",
       order: savedOrder
@@ -138,6 +147,20 @@ const product = await Product.findById(item.productId);
         error: error.message
     });
 }
+}
+
+export async function getOrders(req, res) {
+  if(isAdmin(req.user)){
+    const orders = await order.find().sort({ orderDate: -1 });
+    res.status(200).json(orders);
+  }else if (req.user) {
+    const userEmail = req.user.email;
+    const orders = await order.find({ customerEmail: userEmail }).
+sort({ orderDate: -1 });
+    res.status(200).json(orders);
+  }else {
+    res.status(401).json({ message: "Unauthorized" });
+  }
 }
 
 

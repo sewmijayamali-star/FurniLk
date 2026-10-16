@@ -16,6 +16,7 @@ import Overview from './pages/overview';
 import Cart from './pages/cart';
 import CheckOut from './pages/checkout';
 import { Toaster } from "react-hot-toast";
+import AdminOrders from './pages/AdminFOL/adminOrders';
 
 import { useLocation } from "react-router-dom";
 
@@ -68,6 +69,7 @@ function App() {
         <Route path="/overview/:id" element={<Overview />} />
         <Route path="/cart" element={<Cart />} />
          <Route path="/checkout" element={<CheckOut />} />
+         <Route path="/admin/orders" element={<AdminOrders />} />
         
 
          
