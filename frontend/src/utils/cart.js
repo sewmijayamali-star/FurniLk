@@ -11,10 +11,13 @@ export function Loadcart() {
 
 export function Addtocart(product, quantity = 1) {
 
+    console.log("PRODUCT OBJECT:", product);
+    console.log("PRODUCT _id:", product._id);
+
     let cart = Loadcart();
 
     const existingProductIndex = cart.findIndex(
-        (item) => item.id === product.id
+        (item) => item.id === product._id
     );
 
     if (existingProductIndex !== -1) {
@@ -30,7 +33,7 @@ export function Addtocart(product, quantity = 1) {
         if (quantity > 0) {
 
             const cartItem = {
-                id: product.id,
+                id: product._id,
                 name: product.name,
                 price: product.price,
                 quantity: quantity,

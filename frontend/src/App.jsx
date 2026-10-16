@@ -15,17 +15,20 @@ import Contact from './pages/contact';
 import Overview from './pages/overview';
 import Cart from './pages/cart';
 import CheckOut from './pages/checkout';
+import { Toaster } from "react-hot-toast";
 
 import { useLocation } from "react-router-dom";
 
 function App() {
   return (
+    
     <BrowserRouter>
 
     <ToastContainer
     position="top-right"
     autoClose={2000}
 />
+        <Toaster position="top-right" />
 
       <Routes>
 

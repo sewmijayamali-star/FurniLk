@@ -12,6 +12,11 @@ import {
 } from "../utils/cart";
 import { useLocation } from "react-router-dom";
 
+import { useNavigate } from "react-router-dom";
+
+import toast from "react-hot-toast";
+import axios from "axios";
+
 
 
 
@@ -20,6 +25,8 @@ import { useLocation } from "react-router-dom";
 export default function CheckOut() {
 
     const location = useLocation();
+    const navigate = useNavigate();
+
 
     function getTotal() {
         let total = 0;
@@ -34,6 +41,65 @@ export default function CheckOut() {
      const subtotal = cart.reduce((total, item) => {
         return total + item.price * item.quantity;
     }, 0);
+
+    async function purchasecart() {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            alert("Please log in to place an order.");
+            navigate("/login");
+            return;
+        }
+       
+
+        try {
+
+            console.log("CART ITEM ID:", cart[0]?.id);
+            console.log("CART ITEM _id:", cart[0]?._id);
+            console.log("CART ITEM productId:", cart[0]?.productId);
+            console.log("CART DATA:", cart);
+            console.log("FIRST ITEM ID:", cart[0]?.id);
+             
+            
+            const items = [];
+
+            for (let i = 0; i < cart.length; i++) {
+                items.push({
+                    productId: cart[i].id,
+                    quantity: cart[i].quantity,
+                });
+            }
+
+            console.log("ORDER ITEMS:", items);
+
+             
+
+            const response =await axios.post(import.meta.env.VITE_API_URL + "/orders", {
+                address: "123 Main St, City, Country",
+                items: items,
+            }, {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+             console.log("ORDER API SUCCESS:", response.status, response.data);
+             toast.success("Order placed successfully!");
+        }catch (error) {
+            console.error("Error creating order:");
+            toast.error("Failed to place order. Please try again.");
+
+            if (error.response&&error.response.status === 400) {
+                const code= error.response.data.code;
+                if (code === "PRODUCT_NOT_FOUND") {
+                    toast.error("One or more products in your cart were not found.");
+                }
+                if (code === "INSUFFICIENT_STOCK") {
+                    toast.error("One or more products in your cart have insufficient stock.");
+                }
+            }
+        }
+
+    }   
+
 
     return (
         <div className="min-h-screen bg-[#f8f6f2] pt-32 px-6">
@@ -170,7 +236,7 @@ export default function CheckOut() {
 
                             </div>
 
-                            <button
+                            <button onClick={purchasecart}
                                 className="w-full mt-8 bg-[#824203] hover:bg-[#6d3602] text-white py-4 rounded-2xl font-semibold transition"
                             >
                                 Order
