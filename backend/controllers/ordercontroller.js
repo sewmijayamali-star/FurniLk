@@ -2,6 +2,7 @@ import { startSession } from "mongoose";
 import order from "../modules/order.js";
 import Product from "../modules/products.js";
 
+
 export async function createOrder(req, res) {
   try {
 
@@ -150,10 +151,10 @@ const product = await Product.findById(item.productId);
 }
 
 export async function getOrders(req, res) {
-  if(isAdmin(req.user)){
+  if(isAdmin(req)){
     const orders = await order.find().sort({ orderDate: -1 });
     res.status(200).json(orders);
-  }else if (req.user) {
+  }else if (req) {
     const userEmail = req.user.email;
     const orders = await order.find({ customerEmail: userEmail }).
 sort({ orderDate: -1 });

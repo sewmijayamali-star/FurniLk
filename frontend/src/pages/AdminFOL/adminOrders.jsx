@@ -115,15 +115,7 @@ export default function AdminOrders() {
                       Edit
                     </button>
 
-                    <button
-                      onClick={() => {
-                        setProductToDelete(o._id);
-                        setIsDeleteConfirmOpen(true);
-                      }}
-                      className="px-3 py-1 rounded-lg text-xs font-semibold bg-red-50 text-red-600 hover:bg-red-100 transition"
-                    >
-                      Delete
-                    </button>
+                    
                   </div>
 
                 </div>
