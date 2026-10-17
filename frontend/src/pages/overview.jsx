@@ -147,6 +147,7 @@ export default function Overview() {
                     Addtocart(product, 1);
                     toast.success("Product added to cart!");
                 }}
+
                 className="flex-1 bg-[#824203] hover:bg-[#6d3602] text-white py-4 rounded-2xl font-semibold transition"
             >
                 Add To Cart

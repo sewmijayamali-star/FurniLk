@@ -3,12 +3,19 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import Loader from '../../components/Loader'
+import { Sidebar } from "../admin";
+
+
+
+
 
 function ProductDeleteConfirm(props) {
 
   const _id=props._id
   const close = props.close
   const refresh = props.refresh
+ 
+
   function deleteProduct() {
     const token=localStorage.getItem("token")
     axios
@@ -101,6 +108,7 @@ export default function AdminProducts() {
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false)
   const [productToDelete, setProductToDelete] = useState(null) 
   const [isloading, setIsLoading] = useState(true)
+  const [active, setActive] = useState("products")
 
   // GET PRODUCTS
   useEffect(() => {
@@ -121,13 +129,24 @@ export default function AdminProducts() {
  
       
   return (
-    <div className="w-full">
+     <div className="flex min-h-screen bg-[#F8F5F0]">
+
+      
+          <Sidebar active={active} setActive={setActive} />
+      
       {
         isDeleteConfirmOpen && <ProductDeleteConfirm refresh={() => setIsLoading(true)} _id={productToDelete} close={() => { setIsDeleteConfirmOpen(false) }} />
       }
+       <main className="flex-1 min-w-0 px-4 py-8 sm:px-6 lg:px-8">
+      <div className="w-full space-y-8">
+      
       {/* HEADER */}
       <div className="mb-8 flex items-center justify-between">
+
+        
         <div>
+          
+
           <h1 className="text-3xl font-black text-slate-900">Products</h1>
           <p className="text-sm text-slate-500 mt-1">
             Manage your inventory professionally
@@ -135,11 +154,11 @@ export default function AdminProducts() {
         </div>
 
         <button
-  onClick={() => navigate("/admin/add-product")}
-  className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#824203] to-[#a16207] text-white font-semibold shadow-md hover:scale-105 hover:shadow-lg transition-all duration-200"
->
-  + Add Product
-</button>
+            onClick={() => navigate("/admin/add-product")}
+            className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#824203] to-[#a16207] text-white font-semibold shadow-md hover:scale-105 hover:shadow-lg transition-all duration-200"
+          >
+            + Add Product
+          </button>
       </div>
 
       {/* TABLE */}
@@ -229,6 +248,8 @@ export default function AdminProducts() {
           </>
         )}
       </div>
+      </div>
+      </main>
     </div>
   )
 }

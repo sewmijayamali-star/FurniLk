@@ -15,9 +15,10 @@ export function Addtocart(product, quantity = 1) {
     console.log("PRODUCT _id:", product._id);
 
     let cart = Loadcart();
+    const productId = product._id || product.id;
 
     const existingProductIndex = cart.findIndex(
-        (item) => item.id === product._id
+        (item) => item.id === productId
     );
 
     if (existingProductIndex !== -1) {
@@ -31,13 +32,13 @@ export function Addtocart(product, quantity = 1) {
     } else {
 
         if (quantity > 0) {
-
+           
             const cartItem = {
-                id: product._id,
+                id: product._id ,
                 name: product.name,
                 price: product.price,
                 quantity: quantity,
-                img: product.img
+                img:product.imageUrl
             };
 
             cart.push(cartItem);

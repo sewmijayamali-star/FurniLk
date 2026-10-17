@@ -12,6 +12,8 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import Products from "./AdminFOL/AdminProducts";
+import { useNavigate } from "react-router-dom";
+
 
 const revenueData = [
   { month: "Jan", revenue: 180000 },
@@ -33,8 +35,9 @@ const ordersData = [
   { day: "Sun", orders: 40 },
 ];
 
-function Sidebar({ active, setActive }) {
+export function Sidebar({ active, setActive }) {
   const [open, setOpen] = useState(false);
+   const navigate = useNavigate();
 
   const navItems = [
     { label: "Dashboard", icon: "📊", path: "/admin" },
@@ -63,10 +66,10 @@ function Sidebar({ active, setActive }) {
       </button>
 
       <aside
-        className={`fixed inset-y-0 left-0 z-40 w-72 flex flex-col border-r border-slate-200 bg-white px-6 py-6 shadow-[0_18px_50px_rgba(15,23,42,0.06)] transition-transform duration-300 ${
-          open ? "translate-x-0" : "-translate-x-full"
-        } lg:static lg:translate-x-0 lg:h-screen`}
-      >
+  className={`fixed inset-y-0 left-0 z-40 w-72 flex flex-col border-r border-slate-200 bg-white px-6 py-6 shadow-[0_18px_50px_rgba(15,23,42,0.06)] transition-transform duration-300 ${
+    open ? "translate-x-0" : "-translate-x-full"
+  } lg:sticky lg:top-0 lg:h-screen lg:translate-x-0`}
+>
         <div className="flex items-center gap-3 pb-8">
           <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#B45309] text-white shadow-lg shadow-amber-900/20">
             <span className="text-lg font-black">F</span>
@@ -86,6 +89,7 @@ function Sidebar({ active, setActive }) {
               onClick={() => {
                 setActive(item.label);
                 setOpen(false);
+                navigate(item.path);
               }}
               className={`flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold transition ${
                 active === item.label

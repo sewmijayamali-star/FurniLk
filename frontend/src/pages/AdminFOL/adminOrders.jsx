@@ -3,20 +3,34 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import Loader from '../../components/Loader'
+import { Sidebar } from "../admin";
+
+
 
 
 
 export default function AdminOrders() {
   const navigate = useNavigate()
   const [orders, setOrders] = useState([])
+   const [active, setActive] = useState("Orders")
   
   const [isloading, setIsLoading] = useState(true)
 
   // GET ORDERS
   useEffect(() => {
     if(isloading){
+
+        const token = localStorage.getItem("token");
+        if (token == null ){
+            navigate ("/login");
+            return;
+        }
     
-    axios.get(import.meta.env.VITE_API_URL + '/orders')
+    axios.get(import.meta.env.VITE_API_URL + '/orders',{
+        headers: {
+        Authorization: `Bearer ${token}`
+        },}
+    )
       .then(res => {
         console.log(res.data)
         setOrders(Array.isArray(res.data) ? res.data : [])
@@ -30,100 +44,110 @@ export default function AdminOrders() {
 
  
       
-  return (
-    <div className="w-full">
-      
-      {/* HEADER */}
-      <div className="mb-8 flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-black text-slate-900">Orders</h1>
-          <p className="text-sm text-slate-500 mt-1">
-            Manage your orders   professionally
-          </p>
-        </div>
+  
+return (
+  <div className="flex min-h-screen bg-[#F8F5F0]">
+    <Sidebar active={active} setActive={setActive} />
 
-        
+    <main className="flex-1 min-w-0 overflow-auto px-4 py-8 sm:px-6 lg:px-8">
+      {/* HEADER */}
+      <div className="mb-8">
+        <h1 className="text-3xl font-black text-slate-900">
+          Orders
+        </h1>
+        <p className="mt-1 text-sm text-slate-500">
+          Manage your orders professionally
+        </p>
       </div>
 
       {/* TABLE */}
-      <div className="rounded-3xl border border-slate-200 bg-white shadow-lg overflow-hidden">
+      <div className="w-full overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-lg">
         {isloading ? (
           <div className="p-6">
             <Loader />
           </div>
+        ) : orders.length === 0 ? (
+          <div className="p-10 text-center text-slate-500">
+            No orders found.
+          </div>
         ) : (
-          <>
-            <div className="grid grid-cols-5 gap-4 px-6 py-5 border-b border-slate-200 text-sm font-semibold text-slate-600">
-              <span>Product</span>
-              <span>Category</span>
-              <span>Price</span>
-              <span>Stock</span>
-              <span>Action</span>
-            </div>
+          <div className="w-full overflow-x-auto">
+            <table className="w-full min-w-[1100px] table-fixed text-left">
+              <thead>
+                <tr className="border-b border-slate-200 bg-slate-50 text-sm font-semibold text-slate-600">
+                  <th className="w-[12%] px-5 py-5">Order ID</th>
+                  <th className="w-[12%] px-5 py-5">Items</th>
+                  
+                  <th className="w-[14%] px-5 py-5">Customer Name</th>
+                  <th className="w-[18%] px-5 py-5">Customer Email</th>
+                  <th className="w-[12%] px-5 py-5">Phone Number</th>
+                  <th className="w-[16%] px-5 py-5">Address</th>
+                  <th className="w-[10%] px-5 py-5">Total Amount</th>
+                  <th className="w-[12%] px-5 py-5">Status</th>
+                   <th className="w-[12%] px-5 py-5">Date</th>
+                </tr>
+              </thead>
 
-            <div className="divide-y">
-              {orders.map((o) => (
-                <div
-                  key={o._id}
-                  className="grid grid-cols-5 items-center px-6 py-5 hover:bg-amber-50 transition"
-                >
+              <tbody className="divide-y divide-slate-100">
+                {orders.map((o) => (
+                  <tr
+                    key={o._id || o.orderid}
+                    className="transition hover:bg-amber-50"
+                  >
+                    {/* ORDER ID */}
+                    <td className="break-words px-5 py-5 text-sm font-bold text-slate-800">
+                      {o.orderid || "N/A"}
+                    </td>
 
-                  {/* PRODUCT */}
-                  <div className="flex items-center gap-4">
-                  <img
-                    src={o.imageUrl[0]}
-                    alt={o.name}
-                    className="h-12 w-12 rounded-xl object-cover border border-slate-200"
-                  />
-                                      <div>
-                      <p className="font-semibold text-slate-900">{o.name}</p>
-                      <p className="text-xs text-slate-500">{o._id}</p>
-                    </div>
-                  </div>
-
-                  {/* CATEGORY */}
-                  <div className="text-slate-600 text-sm">
-                    {o.category}
-                  </div>
-
-                  {/* PRICE */}
-                  <div className="font-bold text-slate-900">
-                    LKR {o.price.toLocaleString()}
-                  </div>
-
-                  {/* STOCK */}
-                  <div>
-                    <span
-                      className={`px-3 py-1 rounded-full text-xs font-bold ${
-                        o.stock > 10
-                          ? "bg-emerald-100 text-emerald-700"
-                          : o.stock > 0
-                          ? "bg-amber-100 text-amber-700"
-                          : "bg-rose-100 text-rose-700"
-                      }`}
-                    >
-                      {o.stock} in stock
-                    </span>
-                  </div>
-
-                  {/* ACTION */}
-                  <div className="flex items-center gap-3">
-                    <button
-                      onClick={() => navigate(`/admin/update-order/${o._id}`, { state: o })}
-                      className="px-3 py-1 rounded-lg text-xs font-semibold bg-blue-50 text-blue-600 hover:bg-blue-100 transition"
-                    >
-                      Edit
-                    </button>
+                    {/* ITEMS */}
+                    <td className="break-words px-5 py-5 text-sm font-bold text-slate-800">
+                      {o.items?.length > 0 ? o.items.length : "N/A"}
+                    </td>
 
                     
-                  </div>
 
-                </div>
-              ))}
-            </div>
-          </>
+                    {/* CUSTOMER NAME */}
+                    <td className="break-words px-5 py-5 text-sm text-slate-700">
+                      {o.customerName || "N/A"}
+                    </td>
+
+                    {/* CUSTOMER EMAIL */}
+                    <td className="break-words px-5 py-5 text-sm text-slate-600">
+                      {o.customerEmail || "N/A"}
+                    </td>
+
+                    {/* PHONE NUMBER */}
+                    <td className="break-words px-5 py-5 text-sm text-slate-600">
+                      {o.phoneNumber || "N/A"}
+                    </td>
+
+                    {/* ADDRESS */}
+                    <td className="break-words px-5 py-5 text-sm text-slate-600">
+                      {o.address || "N/A"}
+                    </td>
+
+                    {/* TOTAL AMOUNT */}
+                    <td className="px-5 py-5 text-sm font-bold text-slate-900">
+                      LKR {Number(o.totalAmount || 0).toLocaleString()}
+                    </td>
+
+                    {/* status*/}
+                    <td className="px-5 py-5 text-sm font-bold text-slate-900">
+                      {o.status || "N/A"}
+                    </td>
+
+                    <td className="break-words px-5 py-5 text-sm text-slate-600">
+                      {new Date(item.date).toLocaleDateString("en-GB")}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
-    </div>
-  )
+    </main>
+  </div>
+);
+
 }
