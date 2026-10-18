@@ -28,14 +28,15 @@ export async function createOrder(req, res) {
       let newOrderNumberInString =  newOrderNumber.toString().padStart(7, "0");
         newOrderId = "FUN" + newOrderNumberInString;
     }
+    
 
     let  customerName = req.body.customerName;
-    if (customerName==null) {
-      customerName = user.firstname + " " + user.lastname ;
-    }
+    if (!customerName) {
+  customerName = user.name || "Customer";
+}
 
     let phoneNumber = req.body.phoneNumber;
-    if (phoneNumber==null) {
+    if (!phoneNumber) {
       phoneNumber = user.phone;
     } 
 
@@ -165,4 +166,26 @@ sort({ orderDate: -1 });
   }
 }
 
+export async function UpdateorderStatus(req, res) {
+  if (!isAdmin(req)) {
+    res.status(403).json({
+       message: "you are not authorized to update order status" 
+      })
+      return;
+  }
+  const orderId = req.params.id;
+  const newStatus = req.body.state;
 
+
+  try {
+     await order.updateOne(
+      { _id: orderId },
+      { state: newStatus }
+    );
+
+    res.status(200).json({ message: "Order status updated successfully" });
+  } catch (error) {
+    console.error("Error updating order status:", error);
+    res.status(500).json({ message: "Failed to update order status" });
+  }
+}

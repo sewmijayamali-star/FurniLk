@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom'
 import Loader from '../../components/Loader'
 import { Sidebar } from "../admin";
 
+import OrderDetailsModal from '../../components/OrderDetailsModal';
+
 
 
 
@@ -13,6 +15,7 @@ export default function AdminOrders() {
   const navigate = useNavigate()
   const [orders, setOrders] = useState([])
    const [active, setActive] = useState("Orders")
+   const [selectedOrder, setSelectedOrder] = useState(null);
   
   const [isloading, setIsLoading] = useState(true)
 
@@ -50,6 +53,11 @@ return (
     <Sidebar active={active} setActive={setActive} />
 
     <main className="flex-1 min-w-0 overflow-auto px-4 py-8 sm:px-6 lg:px-8">
+
+                <OrderDetailsModal
+            order={selectedOrder}
+            onClose={() => setSelectedOrder(null)}
+          />
       {/* HEADER */}
       <div className="mb-8">
         <h1 className="text-3xl font-black text-slate-900">
@@ -92,6 +100,7 @@ return (
                 {orders.map((o) => (
                   <tr
                     key={o._id || o.orderid}
+                    onClick={() => setSelectedOrder(o)}
                     className="transition hover:bg-amber-50"
                   >
                     {/* ORDER ID */}
@@ -99,11 +108,14 @@ return (
                       {o.orderid || "N/A"}
                     </td>
 
-                    {/* ITEMS */}
-                    <td className="break-words px-5 py-5 text-sm font-bold text-slate-800">
-                      {o.items?.length > 0 ? o.items.length : "N/A"}
+                   <td className="px-5 py-5 text-sm font-semibold text-slate-700">
+                      {Array.isArray(o.items) && o.items.length > 0
+                        ? o.items.reduce(
+                            (total, item) => total + Number(item.quantity || 1),
+                            0
+                          ) + " Items"
+                        : "N/A"}
                     </td>
-
                     
 
                     {/* CUSTOMER NAME */}
@@ -133,11 +145,11 @@ return (
 
                     {/* status*/}
                     <td className="px-5 py-5 text-sm font-bold text-slate-900">
-                      {o.status || "N/A"}
+                      {o.state || "N/A"}
                     </td>
 
                     <td className="break-words px-5 py-5 text-sm text-slate-600">
-                      {new Date(item.date).toLocaleDateString("en-GB")}
+                      {new Date(o.orderDate).toLocaleDateString("en-GB")}
                     </td>
                   </tr>
                 ))}
