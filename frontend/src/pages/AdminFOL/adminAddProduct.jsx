@@ -33,22 +33,24 @@ export default function AdminAddProduct() {
       return;
     }
 
+    if (!product.imageUrl) {
+      toast.error("Please upload a main product image.");
+      return;
+    }
+
     setLoading(true);
 
-          const promises = product.altImages.map((img) =>
-        mediaUpload(img)
-      );
-
     try {
+      const promises = product.altImages.map((img) => mediaUpload(img));
       const urls = await Promise.all(promises);
 
       console.log("ALT FILES:", product.altImages);
       console.log("UPLOADED URLS:", urls);
 
-      // ✅ FIXED (your altNmames bug safely)
       const alternativeNames = product.altNamesInput
         .split(",")
-        .map(name => name.trim());
+        .map((name) => name.trim())
+        .filter(Boolean);
 
       const newProduct = {
         productId: product.productId,
@@ -78,10 +80,13 @@ export default function AdminAddProduct() {
       navigate("/admin/products");
 
     } catch (err) {
-      toast.error("Failed to add product");
+      console.error("Failed to add product:", err);
+      toast.error(
+        err.response?.data?.message || err.message || "Failed to add product"
+      );
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   }
 
   // ✅ CONNECT FORM TO YOUR FUNCTION
@@ -136,16 +141,15 @@ export default function AdminAddProduct() {
 
         {/* INPUT GRID */}
         <div className="grid md:grid-cols-2 gap-6">
-          <Input  label="Product ID"  name="productId" value={product.productId} onChange={handleChange} 
-/>
-          <Input label="Product Name" name="name" value={product.name} onChange={handleChange} />
-          <Input label="Price" name="price" value={product.price} onChange={handleChange} />
-          <Input label="Label Price" name="labelprice" value={product.labelprice} onChange={handleChange} />
-          <Input label="Stock" name="stock" value={product.stock} onChange={handleChange} />
+          <Input label="Product ID" name="productId" value={product.productId} onChange={handleChange} required />
+          <Input label="Product Name" name="name" value={product.name} onChange={handleChange} required />
+          <Input label="Price" name="price" type="number" min="0" value={product.price} onChange={handleChange} required />
+          <Input label="Label Price" name="labelprice" type="number" min="0" value={product.labelprice} onChange={handleChange} required />
+          <Input label="Stock" name="stock" type="number" min="0" value={product.stock} onChange={handleChange} required />
 
           <div>
             <label className="label">Category</label>
-            <select name="category" value={product.category} onChange={handleChange} className="input">
+            <select name="category" value={product.category} onChange={handleChange} className="input" required>
               <option value="">Select Category</option>
               <option>Furniture</option>
               <option>Living</option>
@@ -174,6 +178,7 @@ export default function AdminAddProduct() {
             value={product.description}
             onChange={handleChange}
             className="input h-32"
+            required
           />
         </div>
 
@@ -186,11 +191,11 @@ export default function AdminAddProduct() {
 
             <label className="uploadBox">
               Click to upload
-              <input type="file" onChange={handleMainImage} hidden />
+              <input type="file" accept="image/*" onChange={handleMainImage} hidden />
             </label>
 
             {product.imageUrl && (
-              <img src={product.imageUrl} className="preview" />
+              <img src={product.imageUrl} alt="Main product preview" className="preview" />
             )}
           </div>
 
@@ -200,7 +205,7 @@ export default function AdminAddProduct() {
 
             <label className="uploadBox">
               Upload multiple images
-              <input type="file" multiple onChange={handleAltImages} hidden />
+              <input type="file" accept="image/*" multiple onChange={handleAltImages} hidden />
             </label>
 
             {/* ✅ FIXED preview */}

@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Admin from './pages/admin'
+import Admin, { AdminPageGuard } from './pages/admin'
 import Login from './pages/login'
 import Home from './pages/home';
 import { ToastContainer } from "react-toastify";
@@ -40,14 +40,15 @@ function App() {
 
         {/* ✅ Login separate page */}
         <Route path="/login" element={<Login />} />
-         <Route path="/admin" element={<Admin />} />
-           
-       
-        <Route path="/admin/customers" element={<h1 >Customers</h1> } />
+        <Route element={<AdminPageGuard />}>
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin/customers" element={<h1>Customers</h1>} />
+          <Route path="/admin/products" element={<AdminProducts />} />
+          <Route path="/admin/add-product" element={<AdminAddProduct />} />
+          <Route path="/admin/update-product/:id" element={<AdminUpdateProduct />} />
+          <Route path="/admin/orders" element={<AdminOrders />} />
+        </Route>
 
-      <Route path="/admin/products" element={<AdminProducts />} />
-      <Route path="/admin/add-product" element={<AdminAddProduct />} />
-      <Route path="/admin/update-product/:id" element={<AdminUpdateProduct />} />
         <Route path="/images" element={<Images />} />
         
 
@@ -69,7 +70,6 @@ function App() {
         <Route path="/overview/:id" element={<Overview />} />
         <Route path="/cart" element={<Cart />} />
          <Route path="/checkout" element={<CheckOut />} />
-         <Route path="/admin/orders" element={<AdminOrders />} />
         
 
          

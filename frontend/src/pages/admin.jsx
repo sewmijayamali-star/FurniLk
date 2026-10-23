@@ -1,5 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import {
   AreaChart,
   Area,
@@ -12,8 +15,56 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import Products from "./AdminFOL/AdminProducts";
-import { useNavigate } from "react-router-dom";
 
+export function AdminPageGuard() {
+  const navigate = useNavigate();
+
+  const [userLoaded, setUserLoaded] = useState(false);
+  useEffect(() => {
+    let isMounted = true;
+    const token = localStorage.getItem("token");
+
+    if (token == null) {
+      toast.error("Please login first");
+      navigate("/login");
+      return;
+    }
+    axios
+      .get(`${import.meta.env.VITE_API_URL}/users/me`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        if (response.data.role !== "admin") {
+          if (!isMounted) return;
+          toast.error("You are not authorized to access this page");
+          navigate("/");
+          return;
+        }
+        if (isMounted) setUserLoaded(true);
+      })
+      .catch(() => {
+        if (!isMounted) return;
+        toast.error("Error fetching user data");
+        navigate("/login");
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [navigate]);
+
+  if (!userLoaded) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#F8F5F0] text-slate-600">
+        Verifying admin access...
+      </div>
+    );
+  }
+
+  return <Outlet />;
+}
 
 const revenueData = [
   { month: "Jan", revenue: 180000 },
