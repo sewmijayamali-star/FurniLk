@@ -20,7 +20,7 @@ export default function ImageSlider(props) {
 
   if (images.length === 0) {
     return (
-      <div className="w-full h-[500px] rounded-3xl bg-gray-100 flex items-center justify-center">
+      <div className="flex h-[300px] w-full items-center justify-center rounded-3xl bg-gray-100 sm:h-[500px]">
         <p className="text-gray-500 text-lg">
           No Images Found
         </p>
@@ -52,7 +52,7 @@ export default function ImageSlider(props) {
       <div className="relative group overflow-hidden rounded-3xl bg-[#f8f6f2] shadow-[0_15px_50px_rgba(0,0,0,0.12)]">
 
         <img
-          className="w-full h-[550px] object-cover transition duration-500 group-hover:scale-105"
+          className="h-[320px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[450px] lg:h-[550px]"
           src={images[currentIndex]}
           alt={`Product image ${currentIndex + 1}`}
         />
@@ -63,7 +63,7 @@ export default function ImageSlider(props) {
         {/* Previous */}
         <button
           onClick={prevImage}
-          className="absolute left-5 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/80 backdrop-blur-md shadow-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300 hover:scale-110"
+          className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 shadow-lg backdrop-blur-md transition duration-300 hover:scale-110 sm:left-5 sm:h-12 sm:w-12 sm:opacity-0 sm:group-hover:opacity-100"
         >
           <FiChevronLeft size={24} />
         </button>
@@ -71,7 +71,7 @@ export default function ImageSlider(props) {
         {/* Next */}
         <button
           onClick={nextImage}
-          className="absolute right-5 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/80 backdrop-blur-md shadow-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300 hover:scale-110"
+          className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 shadow-lg backdrop-blur-md transition duration-300 hover:scale-110 sm:right-5 sm:h-12 sm:w-12 sm:opacity-0 sm:group-hover:opacity-100"
         >
           <FiChevronRight size={24} />
         </button>

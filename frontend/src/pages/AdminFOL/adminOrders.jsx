@@ -52,7 +52,7 @@ return (
   <div className="flex min-h-screen bg-[#F8F5F0]">
     <Sidebar active={active} setActive={setActive} />
 
-    <main className="flex-1 min-w-0 overflow-auto px-4 py-8 sm:px-6 lg:px-8">
+    <main className="min-w-0 flex-1 overflow-auto px-4 pb-8 pt-20 sm:px-6 sm:py-8 lg:px-8">
 
                 <OrderDetailsModal
             order={selectedOrder}
@@ -60,7 +60,7 @@ return (
           />
       {/* HEADER */}
       <div className="mb-8">
-        <h1 className="text-3xl font-black text-slate-900">
+        <h1 className="text-2xl font-black text-slate-900 sm:text-3xl">
           Orders
         </h1>
         <p className="mt-1 text-sm text-slate-500">

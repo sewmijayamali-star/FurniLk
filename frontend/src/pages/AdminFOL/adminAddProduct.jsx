@@ -117,16 +117,16 @@ export default function AdminAddProduct() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#f8f6f2] via-[#f3efe9] to-[#ece7df] flex items-center justify-center p-6">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[#f8f6f2] via-[#f3efe9] to-[#ece7df] p-3 sm:p-6">
 
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-5xl bg-white/80 backdrop-blur-xl border border-white/50 shadow-[0_20px_60px_rgba(0,0,0,0.1)] rounded-3xl p-10 space-y-8"
+        className="w-full max-w-5xl space-y-6 rounded-3xl border border-white/50 bg-white/80 p-5 shadow-[0_20px_60px_rgba(0,0,0,0.1)] backdrop-blur-xl sm:space-y-8 sm:p-10"
       >
 
         {/* HEADER */}
         <div className="text-center space-y-2">
-          <h2 className="text-4xl font-bold text-[#824203]">
+          <h2 className="text-3xl font-bold text-[#824203] sm:text-4xl">
             Add New Product
           </h2>
           <p className="text-[#552b04]">

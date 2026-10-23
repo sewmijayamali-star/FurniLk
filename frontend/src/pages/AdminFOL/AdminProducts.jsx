@@ -38,7 +38,7 @@ function ProductDeleteConfirm(props) {
   <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-[100]">
 
     {/* MODAL */}
-    <div className="w-[500px] rounded-3xl bg-white shadow-2xl relative overflow-hidden border border-slate-200">
+    <div className="relative mx-4 w-full max-w-[500px] overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl">
 
       {/* TOP ACCENT */}
       <div className="h-2 w-full bg-gradient-to-r from-[#824203] to-[#a16207]"></div>
@@ -52,7 +52,7 @@ function ProductDeleteConfirm(props) {
       </button>
 
       {/* CONTENT */}
-      <div className="px-10 py-10">
+      <div className="px-5 py-8 sm:px-10 sm:py-10">
 
         {/* ICON */}
         <div className="w-20 h-20 rounded-full bg-red-100 flex items-center justify-center mx-auto shadow-inner">
@@ -76,12 +76,12 @@ function ProductDeleteConfirm(props) {
 </p>
 
         {/* BUTTONS */}
-        <div className="flex items-center justify-center gap-5 mt-10">
+        <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:mt-10 sm:flex-row sm:items-center sm:gap-5">
 
           {/* CANCEL */}
           <button
             onClick={close}
-            className="px-6 py-3 rounded-xl bg-slate-100 text-slate-700 font-semibold hover:bg-slate-200 transition-all duration-200"
+            className="rounded-xl bg-slate-100 px-6 py-3 font-semibold text-slate-700 transition-all duration-200 hover:bg-slate-200"
           >
             Cancel
           </button>
@@ -89,7 +89,7 @@ function ProductDeleteConfirm(props) {
           {/* DELETE */}
           <button
              onClick={deleteProduct}
-            className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#824203] to-[#a16207] text-white font-semibold shadow-md hover:scale-105 hover:shadow-lg transition-all duration-200"
+            className="rounded-xl bg-gradient-to-r from-[#824203] to-[#a16207] px-6 py-3 font-semibold text-white shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg"
           >
             Delete Product
           </button>
@@ -137,11 +137,11 @@ export default function AdminProducts() {
       {
         isDeleteConfirmOpen && <ProductDeleteConfirm refresh={() => setIsLoading(true)} _id={productToDelete} close={() => { setIsDeleteConfirmOpen(false) }} />
       }
-       <main className="flex-1 min-w-0 px-4 py-8 sm:px-6 lg:px-8">
+       <main className="min-w-0 flex-1 px-4 pb-8 pt-20 sm:px-6 sm:py-8 lg:px-8">
       <div className="w-full space-y-8">
       
       {/* HEADER */}
-      <div className="mb-8 flex items-center justify-between">
+      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 
         
         <div>
@@ -155,7 +155,7 @@ export default function AdminProducts() {
 
         <button
             onClick={() => navigate("/admin/add-product")}
-            className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#824203] to-[#a16207] text-white font-semibold shadow-md hover:scale-105 hover:shadow-lg transition-all duration-200"
+            className="w-full rounded-xl bg-gradient-to-r from-[#824203] to-[#a16207] px-6 py-3 font-semibold text-white shadow-md transition-all duration-200 hover:scale-105 hover:shadow-lg sm:w-auto"
           >
             + Add Product
           </button>
@@ -169,7 +169,9 @@ export default function AdminProducts() {
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-5 gap-4 px-6 py-5 border-b border-slate-200 text-sm font-semibold text-slate-600">
+            <div className="overflow-x-auto">
+              <div className="min-w-[760px]">
+            <div className="grid grid-cols-5 gap-4 border-b border-slate-200 px-6 py-5 text-sm font-semibold text-slate-600">
               <span>Product</span>
               <span>Category</span>
               <span>Price</span>
@@ -181,7 +183,7 @@ export default function AdminProducts() {
               {products.map((p) => (
                 <div
                   key={p._id}
-                  className="grid grid-cols-5 items-center px-6 py-5 hover:bg-amber-50 transition"
+                  className="grid grid-cols-5 items-center px-6 py-5 transition hover:bg-amber-50"
                 >
 
                   {/* PRODUCT */}
@@ -244,6 +246,8 @@ export default function AdminProducts() {
 
                 </div>
               ))}
+            </div>
+              </div>
             </div>
           </>
         )}

@@ -102,11 +102,11 @@ export default function CheckOut() {
 
 
     return (
-        <div className="min-h-screen bg-[#f8f6f2] pt-32 px-6">
+        <div className="min-h-screen bg-[#f8f6f2] px-4 pb-10 pt-28 sm:px-6 sm:pt-32">
 
             <div className="max-w-7xl mx-auto">
 
-                <h1 className="text-4xl font-bold text-[#1a1a1a] mb-10">
+                <h1 className="mb-8 text-3xl font-bold text-[#1a1a1a] sm:mb-10 sm:text-4xl">
                     Shopping Cart
                 </h1>
 
@@ -127,7 +127,7 @@ export default function CheckOut() {
 
                                 <div
                                     key={index}
-                                    className="bg-white rounded-3xl p-5 shadow-sm border border-gray-100 flex gap-5 items-center"
+                                    className="flex flex-wrap items-center gap-4 rounded-3xl border border-gray-100 bg-white p-4 shadow-sm sm:flex-nowrap sm:gap-5 sm:p-5"
                                 >
 
                                     {/* IMAGE */}
@@ -138,13 +138,13 @@ export default function CheckOut() {
                                                 : item.img
                                         }
                                         alt={item.name}
-                                        className="w-32 h-32 object-cover rounded-2xl"
+                                        className="h-20 w-20 rounded-2xl object-cover sm:h-32 sm:w-32"
                                     />
 
                                     {/* DETAILS */}
-                                    <div className="flex-1">
+                                    <div className="min-w-0 flex-1">
 
-                                        <h2 className="text-xl font-semibold text-[#1a1a1a]">
+                                        <h2 className="break-words text-base font-semibold text-[#1a1a1a] sm:text-xl">
                                             {item.name}
                                         </h2>
 
@@ -155,7 +155,7 @@ export default function CheckOut() {
 
                                     </div>
 
-                                    <div className="w-[120px] flex items-center justify-between border border-gray-200 rounded-xl px-3 py-2">
+                                    <div className="ml-auto flex w-[112px] shrink-0 items-center justify-between rounded-xl border border-gray-200 px-2 py-2 sm:ml-0 sm:w-[120px] sm:px-3">
 
                                         <FiChevronDown
                                             className="text-3xl text-[#824203] cursor-pointer"
@@ -205,7 +205,7 @@ export default function CheckOut() {
                     {/* ORDER SUMMARY */}
                     <div>
 
-                        <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 sticky top-32">
+                        <div className="rounded-3xl border border-gray-100 bg-white p-5 shadow-sm sm:p-6 lg:sticky lg:top-32">
 
                             <h2 className="text-2xl font-semibold mb-6">
                                 Order Summary

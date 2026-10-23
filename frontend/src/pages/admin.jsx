@@ -200,7 +200,7 @@ function StatCards() {
 
 function RevenueChart() {
   return (
-    <div className="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm">
+    <div className="min-w-0 rounded-[1.75rem] border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h3 className="text-lg font-bold text-slate-950">Revenue Overview</h3>
@@ -244,7 +244,7 @@ function RevenueChart() {
 
 function OrdersChart() {
   return (
-    <div className="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm">
+    <div className="min-w-0 rounded-[1.75rem] border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
       <div className="mb-6">
         <h3 className="text-lg font-bold text-slate-950">Orders This Week</h3>
         <p className="text-sm text-slate-500">Daily order count</p>
@@ -388,7 +388,7 @@ export default function AdminDashboard() {
     <div className="flex min-h-screen bg-[#F8F5F0]">
       <Sidebar active={active} setActive={setActive} />
 
-      <main className="flex-1 overflow-auto px-4 py-8 sm:px-6 lg:px-8">
+      <main className="min-w-0 flex-1 overflow-auto px-4 pb-8 pt-20 sm:px-6 sm:py-8 lg:px-8">
         {active === "Dashboard" && (
           <>
             <TopBar />

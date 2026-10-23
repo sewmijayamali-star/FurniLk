@@ -41,21 +41,21 @@ export default function Login() {
   }
 
   return (
-    <div className="w-full h-screen bg-[url('/bg.jpg')] bg-cover bg-center flex  ">
+    <div className="flex min-h-screen w-full flex-col bg-[url('/bg.jpg')] bg-cover bg-center md:flex-row">
 
       {/* Left side: animated text */}
-      <div className="w-1/2 h-full flex items-center justify-start px-16">
+      <div className="flex w-full items-center justify-center px-6 pb-4 pt-10 md:h-screen md:w-1/2 md:justify-start md:px-16 md:py-0">
         {/* Use a fixed height to prevent vertical movement */}
-        <div className="h-[200px] flex items-center">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#5A381E] tracking-wide text-center">
+        <div className="flex min-h-24 max-w-xl items-center md:h-[200px]">
+          <h1 className="text-center text-3xl font-bold tracking-wide text-[#5A381E] sm:text-4xl lg:text-5xl md:text-left">
             {promoText}
           </h1>
         </div>
       </div>
 
       {/* Right side: login card */}
-      <div className="w-1/2 h-full flex items-center justify-center">
-        <div className="w-[450px] p-10 backdrop-blur-xl bg-white/20 border border-white/30 rounded-2xl shadow-xl flex flex-col gap-6">
+      <div className="flex w-full flex-1 items-center justify-center px-4 pb-10 md:h-screen md:w-1/2 md:px-6 md:py-0">
+        <div className="flex w-full max-w-[450px] flex-col gap-6 rounded-2xl border border-white/30 bg-white/20 p-6 shadow-xl backdrop-blur-xl sm:p-10">
 
           <h2 className="text-3xl font-bold text-[#5A381E] text-center">Welcome Back</h2>
           <p className="text-center text-[#5A381E]/70">Login to your FurniLK account</p>

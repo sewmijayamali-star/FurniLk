@@ -7,16 +7,16 @@ function Navbar() {
   return (
     <header className="fixed top-0 left-0 z-50 w-full px-4 pt-4 sm:px-6 lg:px-8">
       <nav className="mx-auto max-w-7xl rounded-[1.75rem] border border-white/60 bg-white/75 backdrop-blur-2xl shadow-[0_18px_50px_rgba(15,23,42,0.10)]">
-        <div className="flex items-center justify-between px-5 py-4 sm:px-8">
+        <div className="flex items-center justify-between gap-3 px-4 py-3 sm:px-8 sm:py-4">
           <Link to="/" className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#B45309] text-white shadow-lg shadow-amber-900/20">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#B45309] text-white shadow-lg shadow-amber-900/20 sm:h-11 sm:w-11">
               <span className="text-lg font-black">F</span>
             </div>
-            <div>
-              <h1 className="text-xl font-black tracking-tight text-slate-950">
+            <div className="min-w-0">
+              <h1 className="text-lg font-black tracking-tight text-slate-950 sm:text-xl">
                 Furni<span className="text-[#B45309]">LK</span>
               </h1>
-              <p className="text-xs text-slate-500">Premium furniture for modern homes</p>
+              <p className="hidden text-xs text-slate-500 sm:block">Premium furniture for modern homes</p>
             </div>
           </Link>
 
@@ -64,7 +64,7 @@ function Navbar() {
   </Link>
           </div>
 
-          <div className="hidden items-center gap-3 sm:flex">
+          <div className="hidden items-center gap-3 lg:flex">
             <Link
               to="/login"
               className="rounded-full border border-slate-200 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-[#B45309] hover:text-[#B45309]"
@@ -80,6 +80,8 @@ function Navbar() {
           </div>
 
           <button
+            aria-label={open ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={open}
             onClick={() => setOpen(!open)}
             className="rounded-2xl border border-slate-200 p-2.5 text-slate-700 lg:hidden"
           >
@@ -97,17 +99,26 @@ function Navbar() {
         {open && (
           <div className="border-t border-slate-100 px-5 py-4 lg:hidden">
             <div className="flex flex-col gap-2">
-              {['Home', 'Shop', 'Collections', 'About', 'Contact'].map((item) => (
-                <a
+              {[
+                ['Home', '/'],
+                ['Shop', '/products'],
+                ['Collections', '/collections'],
+                ['About', '/about'],
+                ['Contact', '/contact'],
+                ['Cart', '/cart'],
+              ].map(([item, path]) => (
+                <Link
                   key={item}
-                  href="#"
+                  to={path}
+                  onClick={() => setOpen(false)}
                   className="rounded-2xl px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50 hover:text-[#B45309]"
                 >
                   {item}
-                </a>
+                </Link>
               ))}
               <Link
                 to="/login"
+                onClick={() => setOpen(false)}
                 className="mt-2 rounded-full bg-[#B45309] px-5 py-3 text-center text-sm font-semibold text-white"
               >
                 Sign In
@@ -147,7 +158,7 @@ function Hero() {
             }
           `}</style>
 
-          <h2 className="mt-7 text-5xl font-black leading-[0.95] tracking-tight text-slate-950 sm:text-6xl lg:text-7xl opacity-0 animate-[fadeUp_0.8s_ease-out_0.12s_forwards]">
+          <h2 className="mt-7 text-4xl font-black leading-[0.98] tracking-tight text-slate-950 sm:text-6xl lg:text-7xl opacity-0 animate-[fadeUp_0.8s_ease-out_0.12s_forwards]">
             Elevate Your
             <span className="block text-[#B45309]">Living Space</span>
             <span className="block font-light italic text-slate-500">with elegance.</span>

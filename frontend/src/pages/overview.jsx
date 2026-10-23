@@ -49,13 +49,13 @@ export default function Overview() {
 
       {status === "success" && (
 
-        <div className="max-w-7xl mx-auto px-6 py-12">
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12">
 
           {/* MAIN SECTION */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+          <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-2 lg:gap-16">
 
             {/* LEFT SIDE */}
-            <div className="sticky top-10">
+            <div className="lg:sticky lg:top-10">
               <ImageSlider images={product.imageUrl} />
             </div>
 
@@ -71,7 +71,7 @@ export default function Overview() {
 
               {/* Product Name */}
               <div>
-                <h1 className="text-5xl font-bold text-[#1a1a1a] leading-tight">
+                <h1 className="break-words text-3xl font-bold leading-tight text-[#1a1a1a] sm:text-5xl">
                   {product.name}
                 </h1>
               </div>
@@ -114,7 +114,7 @@ export default function Overview() {
               </div>
 
               {/* FEATURES */}
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
 
                 <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 text-center">
                   <FiTruck className="mx-auto text-2xl mb-3 text-[#824203]" />
@@ -140,7 +140,7 @@ export default function Overview() {
               </div>
 
               {/* BUTTONS */}
-             <div className="flex gap-4 mt-8">
+             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
 
                           <button
                 onClick={() => {

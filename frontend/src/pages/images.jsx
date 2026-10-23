@@ -19,12 +19,13 @@ export default function Images() {
 }
 
     return(
-      <div className="w-full h-screen flex flex-col items-center justify-center gap-4">
+      <div className="flex min-h-screen w-full flex-col items-center justify-center gap-4 px-4 py-8">
       
       <h1 className="text-2xl font-bold">HELLO IMAGES PAGE</h1>
 
       <input
         type="file"
+        className="w-full max-w-sm text-sm"
         onChange={(e) => setFile(e.target.files[0])}
       />
 

@@ -45,7 +45,7 @@ export default function ProductPage() {
     <div className="min-h-screen bg-[#f8f5f0]">
 
       {/* HERO SECTION */}
-      <section className="relative h-[500px] w-full overflow-hidden">
+      <section className="relative h-[380px] w-full overflow-hidden sm:h-[500px]">
 
         <img
           src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1600&auto=format&fit=crop"
@@ -57,7 +57,7 @@ export default function ProductPage() {
 
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
 
-          <h1 className="max-w-3xl text-5xl font-bold text-white lg:text-7xl">
+          <h1 className="max-w-3xl text-4xl font-bold text-white sm:text-5xl lg:text-7xl">
             Modern Furniture For Elegant Living
           </h1>
 
@@ -88,7 +88,7 @@ export default function ProductPage() {
         </div>
 
         {/* SEARCH */}
-        <div className="flex items-center gap-3 rounded-full bg-white px-5 py-3 shadow-md">
+        <div className="flex w-full items-center gap-3 rounded-2xl bg-white px-5 py-3 shadow-md lg:w-auto lg:rounded-full">
 
           <FiSearch className="text-slate-500" />
 
@@ -97,7 +97,7 @@ export default function ProductPage() {
             placeholder="Search furniture..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-[250px] outline-none"
+            className="min-w-0 flex-1 outline-none lg:w-[250px] lg:flex-none"
             />
 
         </div>
@@ -186,7 +186,7 @@ export default function ProductPage() {
                     </section>
 
                     {/* PRODUCTS */}
-                    <section className="mx-auto mt-12 grid max-w-7xl grid-cols-1 gap-8 px-5 pb-20 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    <section className="mx-auto mt-12 grid max-w-7xl grid-cols-1 gap-5 px-4 pb-20 sm:grid-cols-2 sm:gap-8 sm:px-5 lg:grid-cols-3 xl:grid-cols-4">
 
                       {loading ? (
 
@@ -211,7 +211,7 @@ export default function ProductPage() {
                 <img
                   src={product.imageUrl[0]}
                   alt={product.name}
-                  className="h-[320px] w-full object-cover transition duration-500 group-hover:scale-110"
+                  className="h-64 w-full object-cover transition duration-500 group-hover:scale-110 sm:h-[320px]"
                 />
 
                 {/* BADGE */}
@@ -220,7 +220,7 @@ export default function ProductPage() {
                 </div>
 
                 {/* ICONS */}
-                <div className="absolute right-4 top-4 flex flex-col gap-3 opacity-0 transition group-hover:opacity-100">
+                <div className="absolute right-4 top-4 flex flex-col gap-3 opacity-100 transition sm:opacity-0 sm:group-hover:opacity-100">
 
                   <button className="rounded-full bg-white p-3 shadow-md transition hover:bg-[#B45309] hover:text-white">
                     <FiHeart />
