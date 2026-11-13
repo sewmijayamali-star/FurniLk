@@ -62,6 +62,7 @@ export function loginuser(req, res) {
                 name: user.name,
                 role: user.role,
                 isVarified: user.isVarified,
+                imageUrl: user.imageUrl,
             },
             process.env.JWT_SECRET,
         ) ; 

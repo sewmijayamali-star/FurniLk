@@ -17,6 +17,8 @@ import Cart from './pages/cart';
 import CheckOut from './pages/checkout';
 import { Toaster } from "react-hot-toast";
 import AdminOrders from './pages/AdminFOL/adminOrders';
+import Profile from './pages/profile';
+
 
 import { useLocation } from "react-router-dom";
 
@@ -53,14 +55,7 @@ function App() {
         
 
         {/* ✅ Contact (optional same as home layout) */}
-        <Route 
-          path="/contact" 
-          element={
-            <div className="w-full h-[100vh] bg-red-500">
-              <h2>Contact</h2>
-            </div>
-          } 
-        />
+       
 
         <Route path="/products" element={<ProductPage />} />
 
@@ -70,6 +65,8 @@ function App() {
         <Route path="/overview/:id" element={<Overview />} />
         <Route path="/cart" element={<Cart />} />
          <Route path="/checkout" element={<CheckOut />} />
+        <Route path="/profile" element={<Profile />} />
+         
         
 
          
