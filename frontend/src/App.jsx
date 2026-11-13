@@ -18,6 +18,10 @@ import CheckOut from './pages/checkout';
 import { Toaster } from "react-hot-toast";
 import AdminOrders from './pages/AdminFOL/adminOrders';
 import Profile from './pages/profile';
+import AdminCustomers from "./pages/AdminFOL/AdminCustomers";
+import AdminCategories from "./pages/AdminFOL/AdminCategories";
+import AdminReports from "./pages/AdminFOL/AdminReports";
+import AdminSettings from "./pages/AdminFOL/AdminSettings";
 
 
 import { useLocation } from "react-router-dom";
@@ -44,12 +48,14 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route element={<AdminPageGuard />}>
           <Route path="/admin" element={<Admin />} />
-          <Route path="/admin/customers" element={<h1>Customers</h1>} />
+          <Route path="/admin/customers" element={<AdminCustomers />} />
           <Route path="/admin/products" element={<AdminProducts />} />
           <Route path="/admin/add-product" element={<AdminAddProduct />} />
           <Route path="/admin/update-product/:id" element={<AdminUpdateProduct />} />
           <Route path="/admin/orders" element={<AdminOrders />} />
-        </Route>
+          <Route path="/admin/reports" element={<AdminReports />} />
+          <Route path="/admin/categories" element={<AdminCategories />} />
+         <Route path="/admin/settings" element={<AdminSettings />} />        </Route>
 
         <Route path="/images" element={<Images />} />
         
@@ -66,6 +72,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
          <Route path="/checkout" element={<CheckOut />} />
         <Route path="/profile" element={<Profile />} />
+        
          
         
 

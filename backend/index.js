@@ -7,6 +7,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import orderrouter from "./routes/orderrouter.js";
 import { getOrders } from "./controllers/ordercontroller.js";
+import categoryRouter from "./routes/categoryrouter.js";
 
 dotenv.config();
 
@@ -53,6 +54,8 @@ app.use("/users", userRouter);
 app.use("/products", productrouter);
 app.use("/orders", orderrouter);
 app.use("/orders", getOrders);
+app.use("/categories", categoryRouter);
+
 
 
 app.listen(PORT, () => {

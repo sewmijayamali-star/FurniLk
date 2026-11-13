@@ -24,22 +24,24 @@ export default function Login() {
   }, []);
 
   async function login() {
-    try {
-      const response = await axios.post('http://localhost:5000/users/login', { email, password });
-      console.log(response.data);
+  try {
+    const response = await axios.post('http://localhost:5000/users/login', { email, password });
+    console.log(response.data);
 
-      localStorage.setItem("token", response.data.token);
+    localStorage.setItem("token", response.data.token);
 
+    const user = JSON.parse(
+      atob(response.data.token.split(".")[1])
+    );
 
-      const user = response.data;
-      user === "admin" ? navigation("/admin") : navigation("/");
-      toast.success("Login successful!");
-    } catch (err) {
-      console.error("Login failed:", err.response?.data || err.message);
-      toast.error(err.response?.data?.message || "Login failed. Please try again.");
-    }
+    user.role === "admin" ? navigation("/admin") : navigation("/");
+
+    toast.success("Login successful!");
+  } catch (err) {
+    console.error("Login failed:", err.response?.data || err.message);
+    toast.error(err.response?.data?.message || "Login failed. Please try again.");
   }
-
+}
   return (
     <div className="flex min-h-screen w-full flex-col bg-[url('/bg.jpg')] bg-cover bg-center md:flex-row">
 

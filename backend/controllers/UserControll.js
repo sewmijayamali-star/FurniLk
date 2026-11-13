@@ -108,3 +108,30 @@ export function getUsers(req, res) {
       }
      }
     }
+
+    export function getCustomers(req, res) {
+    if (req.user == null) {
+        return res.status(401).json({
+            message: "Unauthorized"
+        });
+    }
+
+    if (req.user.role != "admin") {
+        return res.status(403).json({
+            message: "You are not allowed to view customers"
+        });
+    }
+
+    User.find({ role: "customer" })
+        .select("-password")
+        .sort({ createdAt: -1 })
+        .then((customers) => {
+            res.status(200).json(customers);
+        })
+        .catch((error) => {
+            res.status(500).json({
+                message: "Failed to fetch customers",
+                error: error.message
+            });
+        });
+}
