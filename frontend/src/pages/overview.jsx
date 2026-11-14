@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Loader from "../components/Loader";
+import Loader from "../components/loader";
 import ImageSlider from "../components/ImageSlider";
 import { Link, useParams } from "react-router-dom";
 import { Addtocart } from "../utils/cart";

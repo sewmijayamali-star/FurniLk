@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
-import Loader from '../../components/Loader'
+import Loader from '../../components/loader'
 import { Sidebar } from "../admin";
 
 
