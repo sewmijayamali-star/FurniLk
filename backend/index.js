@@ -8,6 +8,10 @@ import dotenv from "dotenv";
 import orderrouter from "./routes/orderrouter.js";
 import { getOrders } from "./controllers/ordercontroller.js";
 import categoryRouter from "./routes/categoryrouter.js";
+import paymentRouter from "./routes/paymentRouter.js";
+
+
+
 
 dotenv.config();
 
@@ -15,10 +19,16 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 
 app.use(
   (req,res,next)=>{
+
+    if (req.path === "/payments/notify") {
+    return next();
+}
     const header=req.header("Authorization");
     if (header!= null) {
       const token=header.replace("Bearer ", "");
@@ -55,6 +65,7 @@ app.use("/products", productrouter);
 app.use("/orders", orderrouter);
 app.use("/orders", getOrders);
 app.use("/categories", categoryRouter);
+app.use("/payments", paymentRouter);
 
 
 

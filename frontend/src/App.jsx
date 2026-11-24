@@ -22,6 +22,8 @@ import AdminCustomers from "./pages/AdminFOL/AdminCustomers";
 import AdminCategories from "./pages/AdminFOL/AdminCategories";
 import AdminReports from "./pages/AdminFOL/AdminReports";
 import AdminSettings from "./pages/AdminFOL/AdminSettings";
+import PaymentSuccess from './pages/PaymentSuccess';
+import PaymentCancel from './pages/PaymentCancel';
 
 
 import { useLocation } from "react-router-dom";
@@ -72,7 +74,8 @@ function App() {
         <Route path="/cart" element={<Cart />} />
          <Route path="/checkout" element={<CheckOut />} />
         <Route path="/profile" element={<Profile />} />
-        
+        <Route path="/payment/success" element={<PaymentSuccess />} />
+<Route path="/payment/cancel" element={<PaymentCancel />} />
          
         
 
